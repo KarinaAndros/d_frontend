@@ -1,0 +1,28 @@
+@use './variables' as *;
+
+:root {
+  // links
+  --color-links: #{$colorWhite};
+  --color-links-active: #{$mainColor};
+
+  // header
+  --color-burger: #{$colorWhite};
+  --header-background: #090011bd;
+
+  // background
+  --color-background: #{$colorBlack};
+
+  //buttons
+  --buttons-color: #{$colorWhite};
+  --buttons-background: $mainGradient;
+
+  //inputs
+  --inputs-background: rgba(255, 255, 255, 0.7);
+  --inputs-color: #{$mainColor};
+
+}
+
+@import './styles/header.scss';
+@import './styles/blocks.scss';
+@import './styles/forms.scss';
+@import './styles/buttons.scss';

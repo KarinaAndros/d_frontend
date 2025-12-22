@@ -1,0 +1,58 @@
+$flex: column, row;
+@each $i in $flex {
+  .flex_#{$i} {
+    display: flex;
+    flex-direction: $i;
+  }
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-links);
+  font-family: sans-serif;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-links);
+  transition: color 0.3s ease;
+
+  &.active {
+    color: var(--color-links-active);
+  }
+}
+
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.home {
+  height: 100vh;
+  width: 100%;
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/img/backgrounds/registration.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    pointer-events: none;
+    z-index: -1;
+  }
+}

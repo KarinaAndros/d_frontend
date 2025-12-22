@@ -1,0 +1,10 @@
+button {
+  height: 50px;
+  color: var(--buttons-color);
+  border: 1px solid transparent;
+  border-radius: $border-radius;
+  background:
+    $mainGradient padding-box,
+    $mainGradient border-box;
+  text-transform: uppercase;
+}
