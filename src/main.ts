@@ -7,7 +7,7 @@ import '../resources/js/echo'
 const app = createApp(App)
 
 app.use(createYmaps({
-  apikey: '9811b22a-e004-49b4-ac9a-4103a26f10ee',
+  apikey: '9954c22f-12b3-48aa-be29-5a9d90b5e48e',
   lang: 'ru_RU',
 }))
 

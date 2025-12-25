@@ -5,9 +5,9 @@ import ProfilePage from '@/pages/profilePage.vue'
 import RegistrationPage from '@/pages/registrationPage.vue'
 
 export const routes = [
-  { path: '/', component: HomeComponent },
+  { path: '/', component: HomeComponent, meta: { requiresAuth: true } },
   { path: '/registration', component: RegistrationPage },
-  { path: '/login', component: LoginPage },
+  { path: '/login', name: 'login', component: LoginPage },
   { path: '/profile', component: ProfilePage },
-  { path: '/map', component: MapPage },
+  { path: '/map', name: 'map', component: MapPage, meta: { requiresAuth: true } },
 ]
