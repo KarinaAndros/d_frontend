@@ -7,16 +7,27 @@ export const useAuthStore = defineStore('auth', () => {
   /**
    * Interface for User
    */
-  interface User {
-    id?: number | null
-    name?: string | null
-    surname?: string | null
-    email?: string | null
-    email_verified_at?: string | null
-    created_at?: string | null
-    updated_at?: string | null
-    lat?: number | null | undefined
-    lng?: number | null | undefined
+  // interface User {
+  //   id: number
+  //   name: string
+  //   surname?: string
+  //   email: string
+  //   email_verified_at: string
+  //   created_at: string
+  //   updated_at: string
+  //   lat: number
+  //   lng: number
+  // }
+  /**
+   * Interface for User Response
+   */
+  interface UserResponse {
+    user: {
+      id: number
+      name: string
+      lat: number
+      lng: number
+    }
   }
   /**
    * Interface for Login values
@@ -24,12 +35,10 @@ export const useAuthStore = defineStore('auth', () => {
    * @string password
    */
   interface LoginType {
-    email?: string
-    password?: string
-    lat?: number
-    lng?: number
+    email: string
+    password: string
   }
-  const users = ref<User[] | []>([])
+  const users = ref<UserResponse['user'][]>([])
   /**
    * Auth User
    */
@@ -60,8 +69,8 @@ export const useAuthStore = defineStore('auth', () => {
           const response = await api.post('/api/user/location', formData)
           if (response.status === 200) {
             echo.channel('map')
-              .listen('.UserAdded', (e) => {
-                const mapUser = {
+              .listen('.UserAdded', (e: UserResponse) => {
+                const mapUser: UserResponse['user'] = {
                   ...e.user,
                 }
                 users.value.push(mapUser)

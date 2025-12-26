@@ -2,7 +2,6 @@
 import { useForm } from 'vee-validate'
 import { loginSchema } from '@/schemas/login'
 import { useAuthStore } from '@/stores/auth'
-import echo from '../../resources/js/echo'
 
 const validationSchema = loginSchema
 
@@ -17,7 +16,7 @@ const submitForm = handleSubmit(async (values) => {
 })
 
 interface InputType {
-  name: string
+  name: 'email' | 'password'
   type: string
   placeholder: string
 }

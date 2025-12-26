@@ -22,7 +22,7 @@ const submitForm = handleSubmit(async (values) => {
 })
 
 interface InputType {
-  name: string
+  name: 'email' | 'password' | 'name' | 'surname' | 'password_confirmation'
   type: string
   placeholder: string
 }

@@ -26,11 +26,12 @@ api.interceptors.request.use(
 );
 
 // get Cookie
-function getCookie(name: string) {
-  const parts = ref<string[]>([])
+function getCookie(name: string): string | undefined {
   const value = `; ${document.cookie}`;
-  parts.value  = value.split(`; ${name}=`);
-  if (parts.value && parts.value.length === 2) 
-    return parts.value.pop().split(';').shift();
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) {
+    return parts.pop()?.split(';').shift();
+  }
+  return undefined;
 }
 export default api;
