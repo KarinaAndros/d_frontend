@@ -34,18 +34,18 @@ export default antfu({
       'always',
     ],
 
-    'vue/multi-word-component-names': [
-      'error',
-      {
-        ignores: [
-          'index',
-          'default',
-          'app',
-          'error',
-          'README',
-        ],
-      },
-    ],
+    // 'vue/multi-word-component-names': [
+    //   'error',
+    //   {
+    //     ignores: [
+    //       'index',
+    //       'default',
+    //       'app',
+    //       'error',
+    //       'README',
+    //     ],
+    //   },
+    // ],
 
     'vue/max-attributes-per-line': [
       'error',

@@ -11,14 +11,13 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    Edit: typeof import('./../../components/Modals/users/edit.vue')['default']
     Header: typeof import('./../../components/Header/index.vue')['default']
     HeaderMenu: typeof import('./../../components/Header/headerMenu.vue')['default']
-    HeaderNav: typeof import('./../../components/Header/headerNav.vue')['default']
     HomeComponent: typeof import('./../../components/homeComponent.vue')['default']
-    Input: typeof import('../../components/Forms/inputForm.vue')['default']
     InputForm: typeof import('./../../components/Forms/inputForm.vue')['default']
-    Menu: typeof import('./src/components/Header/menu.vue')['default']
-    RegistrationPage: typeof import('../../pages/registrationPage.vue')['default']
+    Modals: typeof import('./../../components/Modals/index.vue')['default']
+    Registration: typeof import('./../../components/Modals/registration.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

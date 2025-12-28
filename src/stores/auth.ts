@@ -1,23 +1,10 @@
 import type { LngLat } from '@yandex/ymaps3-types'
+import type { UserType } from '@/types'
 import api from '@/api'
 import router from '@/router'
 import echo from '../../resources/js/echo'
 
 export const useAuthStore = defineStore('auth', () => {
-  /**
-   * Interface for User
-   */
-  // interface User {
-  //   id: number
-  //   name: string
-  //   surname?: string
-  //   email: string
-  //   email_verified_at: string
-  //   created_at: string
-  //   updated_at: string
-  //   lat: number
-  //   lng: number
-  // }
   /**
    * Interface for User Response
    */
@@ -43,6 +30,7 @@ export const useAuthStore = defineStore('auth', () => {
    * Auth User
    */
   const authUser = ref(localStorage.getItem('user') || '')
+  const authUserData = ref<UserType>()
   /**
    * Token for auth User
    */
@@ -128,15 +116,29 @@ export const useAuthStore = defineStore('auth', () => {
   const logout = async () => {
     localStorage.removeItem('auth_token')
     localStorage.removeItem('user')
-    // await api.get('/logout')
   }
 
   const isAuthenticated = computed(() => {
     return !!token.value && !!users.value
   })
 
+  const getAuthUser = async () => {
+    await api.get('/api/user', {
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+    })
+      .then((response) => {
+        authUserData.value = response.data
+      })
+      .catch((error) => {
+        console.error('Ошибка авторизации:', error)
+      })
+  }
+
   return {
     authUser,
+    authUserData,
     location,
     users,
     token,
@@ -144,5 +146,6 @@ export const useAuthStore = defineStore('auth', () => {
     login,
     getLocation,
     logout,
+    getAuthUser,
   }
 })

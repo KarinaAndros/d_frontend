@@ -1,0 +1,31 @@
+.profile {
+  margin: 20px;
+  padding: 10px;
+  border-radius: var(--border-radius);
+  background: var(--profile-background);
+  display: flex;
+  flex-direction: column;
+  gap: var(--profile-gap);
+  border: 1px solid var(--profile-border-color);
+}
+.profile_avatar {
+  max-width: 130px;
+  height: 130px;
+  border: 2px solid transparent;
+  background:
+    $mainGradient padding-box,
+    linear-gradient(90deg, #351056 0%, rgb(123, 123, 123) 100%) border-box;
+  border-radius: 100%;
+  object-fit: cover;
+}
+.profile_mainInf {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--profile-gap);
+}
+.profile_buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--profile-gap);
+}

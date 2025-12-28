@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { InputType } from '@/types'
 import { useForm } from 'vee-validate'
 import api from '@/api'
 import { regSchema } from '@/schemas/reg'
@@ -20,12 +21,6 @@ const submitForm = handleSubmit(async (values) => {
     }
   }
 })
-
-interface InputType {
-  name: 'email' | 'password' | 'name' | 'surname' | 'password_confirmation'
-  type: string
-  placeholder: string
-}
 
 const inputs: InputType[] = [
   {

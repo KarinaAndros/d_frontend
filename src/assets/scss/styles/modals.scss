@@ -1,0 +1,26 @@
+.modal {
+  width: 90%;
+  background-color: black;
+  height: inherit;
+  margin: 0 auto;
+  position: relative;
+  border-radius: var(--border-radius);
+
+  &_inner {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.48);
+    display: flex;
+    align-items: center;
+  }
+}
+.close_icon {
+  width: 20px;
+  height: 20px;
+  top: 20px;
+  right: 20px;
+  position: absolute;
+}

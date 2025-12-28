@@ -1,6 +1,8 @@
 @use './variables' as *;
 
 :root {
+  --border-radius: 12px;
+
   // links
   --color-links: #{$colorWhite};
   --color-links-active: #{$mainColor};
@@ -20,9 +22,15 @@
   --inputs-background: rgba(255, 255, 255, 0.7);
   --inputs-color: #{$mainColor};
 
+  //profile
+  --profile-border-color: #{$mainColor};
+  --profile-background: rgba(0, 0, 0, 0.666);
+  --profile-gap: 10px;
 }
 
 @import './styles/header.scss';
 @import './styles/blocks.scss';
 @import './styles/forms.scss';
 @import './styles/buttons.scss';
+@import './styles/profile.scss';
+@import './styles/modals.scss';

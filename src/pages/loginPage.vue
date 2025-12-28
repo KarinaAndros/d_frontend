@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { InputType } from '@/types'
 import { useForm } from 'vee-validate'
 import { loginSchema } from '@/schemas/login'
 import { useAuthStore } from '@/stores/auth'
@@ -15,12 +16,6 @@ const submitForm = handleSubmit(async (values) => {
   store.login(values)
 })
 
-interface InputType {
-  name: 'email' | 'password'
-  type: string
-  placeholder: string
-}
-
 const inputs: InputType[] = [
   {
     name: 'email',
@@ -33,10 +28,6 @@ const inputs: InputType[] = [
     placeholder: 'пароль',
   },
 ]
-
-onMounted(() => {
-
-})
 </script>
 
 <template>
