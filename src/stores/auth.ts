@@ -25,6 +25,19 @@ export const useAuthStore = defineStore('auth', () => {
     email: string
     password: string
   }
+  /**
+   * Interface for Registration values
+   * @string email
+   * @string password
+   */
+  interface RegType {
+    name: string
+    surname?: string | null
+    email: string
+    password: string
+    password_confirmation: string
+    agree: boolean
+  }
   const users = ref<UserResponse['user'][]>([])
   /**
    * Auth User
@@ -91,20 +104,43 @@ export const useAuthStore = defineStore('auth', () => {
       console.error('CSRF initialization failed:', error)
     }
   }
+
   /**
-   * Login User
+   * Registration User
    */
-  const login = async (values: LoginType) => {
+  const registration = async (values: RegType) => {
     try {
       initCSRF()
-      const response = await api.post('/login', values)
+      const response = await api.post('api/users', values)
       if (response.data.token) {
         token.value = response.data.token
         authUser.value = response.data.user
         localStorage.setItem('auth_token', token.value)
         localStorage.setItem('user', JSON.stringify(authUser.value))
         api.defaults.headers.common.Authorization = `Bearer ${token.value}`
-        router.push('/map')
+        router.push('/profile')
+      }
+      return response.data
+    }
+    catch (error: any) {
+      console.error(error)
+    }
+  }
+
+  /**
+   * Login User
+   */
+  const login = async (values: LoginType) => {
+    try {
+      initCSRF()
+      const response = await api.post('/api/login', values)
+      if (response.data.token) {
+        token.value = response.data.token
+        authUser.value = response.data.user
+        localStorage.setItem('auth_token', token.value)
+        localStorage.setItem('user', JSON.stringify(authUser.value))
+        api.defaults.headers.common.Authorization = `Bearer ${token.value}`
+        router.push('/profile')
       }
       return response.data
     }
@@ -114,8 +150,17 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const logout = async () => {
-    localStorage.removeItem('auth_token')
-    localStorage.removeItem('user')
+    await api.get('/api/logout', {
+      headers: {
+        Authorization: `Bearer ${token.value}`,
+      },
+    }).then((response) => {
+      if (response.status === 200) {
+        localStorage.removeItem('auth_token')
+        localStorage.removeItem('user')
+        router.push('/login')
+      }
+    })
   }
 
   const isAuthenticated = computed(() => {
@@ -125,7 +170,7 @@ export const useAuthStore = defineStore('auth', () => {
   const getAuthUser = async () => {
     await api.get('/api/user', {
       headers: {
-        Authorization: `Bearer ${token.value}`,
+        Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
       },
     })
       .then((response) => {
@@ -144,6 +189,7 @@ export const useAuthStore = defineStore('auth', () => {
     token,
     isAuthenticated,
     login,
+    registration,
     getLocation,
     logout,
     getAuthUser,

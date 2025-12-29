@@ -1,28 +1,23 @@
 <script setup lang="ts">
-import type { InputType } from '@/types'
+import type { InputTypeReg } from '@/types'
 import { useForm } from 'vee-validate'
-import api from '@/api'
 import { regSchema } from '@/schemas/reg'
+import { useAuthStore } from '@/stores/auth'
 
 const validationSchema = regSchema
 
-const { values, errors, handleSubmit, defineField, setFieldValue, setErrors } = useForm({
+const authStore = useAuthStore()
+
+const { values, errors, handleSubmit, defineField, setFieldValue } = useForm({
   validationSchema,
 })
 const [agree, agreeAttrs] = defineField('agree')
 
 const submitForm = handleSubmit(async (values) => {
-  try {
-    await api.post('api/users', values)
-  }
-  catch (error: any) {
-    if (error.response?.status === 422) {
-      setErrors(error.response.data.errors)
-    }
-  }
+  authStore.registration(values)
 })
 
-const inputs: InputType[] = [
+const inputs: InputTypeReg[] = [
   {
     name: 'name',
     type: 'text',
@@ -65,7 +60,7 @@ const inputs: InputType[] = [
         <InputForm
           :class="{ error: errors[input.name] }"
           :name="input.name"
-          :model-value="values[input.name]"
+          :model-value="values[input.name] as any"
           :type="input.type"
           :placeholder="input.placeholder"
           @update:model-value="(newValue) => setFieldValue(input.name, newValue)"

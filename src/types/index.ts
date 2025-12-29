@@ -18,7 +18,13 @@ export interface UserType {
 }
 
 export interface InputType {
-  name: 'email' | 'password' | 'name' | 'surname' | 'password_confirmation' | 'date' | 'avatar'
+  name: 'email' | 'password'
+  type: string
+  placeholder: string
+}
+
+export interface InputTypeReg {
+  name: 'email' | 'password' | 'name' | 'surname' | 'password_confirmation'
   type: string
   placeholder: string
 }
