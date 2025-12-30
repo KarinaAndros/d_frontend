@@ -26,6 +26,11 @@
   --profile-border-color: #{$mainColor};
   --profile-background: rgba(0, 0, 0, 0.666);
   --profile-gap: 10px;
+
+  //errors
+  --message-error-background: red;
+  --message-error-text: #{$colorWhite};
+
 }
 
 @import './styles/header.scss';

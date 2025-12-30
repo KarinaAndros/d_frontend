@@ -8,7 +8,7 @@ const validationSchema = loginSchema
 
 const store = useAuthStore()
 
-const { values, errors, handleSubmit, setFieldValue } = useForm({
+const { values, errors, handleSubmit, setFieldValue, submitCount } = useForm({
   validationSchema,
 })
 
@@ -32,6 +32,12 @@ const inputs: InputType[] = [
 
 <template>
   <div class="home">
+    <div
+      v-if="store.messageError"
+      class="messageError"
+    >
+      {{ store.messageError }}
+    </div>
     <form
       class="flex_column"
       @submit="submitForm"
@@ -42,7 +48,7 @@ const inputs: InputType[] = [
         class="input-wrapper"
       >
         <InputForm
-          :class="{ error: errors[input.name] }"
+          :class="{ error: errors[input.name] && submitCount > 0 }"
           :name="input.name"
           :model-value="values[input.name]"
           :type="input.type"
@@ -50,7 +56,7 @@ const inputs: InputType[] = [
           @update:model-value="(newValue) => setFieldValue(input.name, newValue)"
         />
         <span
-          v-if="errors[input.name]"
+          v-if="errors[input.name] && submitCount > 0"
           class="error"
         >
           {{ errors[input.name] }}

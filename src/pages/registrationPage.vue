@@ -8,7 +8,7 @@ const validationSchema = regSchema
 
 const authStore = useAuthStore()
 
-const { values, errors, handleSubmit, defineField, setFieldValue } = useForm({
+const { values, errors, handleSubmit, defineField, setFieldValue, submitCount } = useForm({
   validationSchema,
 })
 const [agree, agreeAttrs] = defineField('agree')
@@ -58,7 +58,7 @@ const inputs: InputTypeReg[] = [
         class="input-wrapper"
       >
         <InputForm
-          :class="{ error: errors[input.name] }"
+          :class="{ error: errors[input.name] && submitCount > 0 }"
           :name="input.name"
           :model-value="values[input.name] as any"
           :type="input.type"
@@ -66,7 +66,7 @@ const inputs: InputTypeReg[] = [
           @update:model-value="(newValue) => setFieldValue(input.name, newValue)"
         />
         <span
-          v-if="errors[input.name]"
+          v-if="errors[input.name] && submitCount > 0"
           class="error"
         >
           {{ errors[input.name] }}

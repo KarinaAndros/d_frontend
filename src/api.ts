@@ -1,37 +1,24 @@
-import axios from 'axios'
+import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:8000',
-  withCredentials: true,
-  withXSRFToken: true,
+  baseURL: 'http://localhost:8000', // Ваш адрес
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
-  },
-})
-
-// Перехватчик для CSRF токена
-api.interceptors.request.use(
-  (config) => {
-    // Получаем CSRF токен из cookies
-    const token = getCookie('XSRF-TOKEN');
-    if (token) {
-      config.headers['X-XSRF-TOKEN'] = token;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
   }
-);
+});
 
-// get Cookie
-function getCookie(name: string): string | undefined {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) {
-    return parts.pop()?.split(';').shift();
+// Важно: Отключаем куки, чтобы не было конфликтов
+api.defaults.withCredentials = false;
+api.defaults.withXSRFToken = false;
+
+// Автоматическая подстановка токена
+api.interceptors.request.use(config => {
+  const token = localStorage.getItem('auth_token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
-  return undefined;
-}
+  return config;
+});
+
 export default api;

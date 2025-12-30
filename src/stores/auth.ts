@@ -39,6 +39,8 @@ export const useAuthStore = defineStore('auth', () => {
     agree: boolean
   }
   const users = ref<UserResponse['user'][]>([])
+
+  const messageError = ref<string>()
   /**
    * Auth User
    */
@@ -90,27 +92,11 @@ export const useAuthStore = defineStore('auth', () => {
       },
     )
   }
-
-  /**
-   * Init CSRF
-   */
-  const initCSRF = async () => {
-    try {
-      await api.get('/sanctum/csrf-cookie', {
-        withCredentials: true,
-      })
-    }
-    catch (error) {
-      console.error('CSRF initialization failed:', error)
-    }
-  }
-
   /**
    * Registration User
    */
   const registration = async (values: RegType) => {
     try {
-      initCSRF()
       const response = await api.post('api/users', values)
       if (response.data.token) {
         token.value = response.data.token
@@ -132,7 +118,6 @@ export const useAuthStore = defineStore('auth', () => {
    */
   const login = async (values: LoginType) => {
     try {
-      initCSRF()
       const response = await api.post('/api/login', values)
       if (response.data.token) {
         token.value = response.data.token
@@ -145,14 +130,16 @@ export const useAuthStore = defineStore('auth', () => {
       return response.data
     }
     catch (error: any) {
-      console.error(error)
+      if (error.response.status === 401) {
+        messageError.value = error.response.data.message
+      }
     }
   }
 
   const logout = async () => {
-    await api.get('/api/logout', {
+    await api.post('/api/logout', {}, {
       headers: {
-        Authorization: `Bearer ${token.value}`,
+        Authorization: `Bearer ${localStorage.getItem('auth_token') }`,
       },
     }).then((response) => {
       if (response.status === 200) {
@@ -187,6 +174,7 @@ export const useAuthStore = defineStore('auth', () => {
     location,
     users,
     token,
+    messageError,
     isAuthenticated,
     login,
     registration,
