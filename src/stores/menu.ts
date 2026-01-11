@@ -7,42 +7,21 @@ export const useMenuStore = defineStore('menu', () => {
     action?: string
   }
 
-  const authStore = useAuthStore()
-
-  const menu = ref<MenuItemType[]>()
-
-  if (!authStore.isAuthenticated) {
-    menu.value
-      = [
-        {
-          name: 'Регистрация',
-          link: '/registration',
-        },
-        {
-          name: 'Войти',
-          link: '/login',
-        },
-
+  const menu = computed<MenuItemType[]>(() => {
+    if (!useAuthStore().isAuthenticated) {
+      return [
+        { name: 'Регистрация', link: '/registration' },
+        { name: 'Войти', link: '/login' },
       ]
-  }
-  else {
-    menu.value
-      = [
-        {
-          name: 'Профиль',
-          link: '/profile',
-        },
-        {
-          name: 'Карта',
-          link: '/map',
-        },
-        {
-          name: 'Выйти',
-          action: 'logout',
-        },
-
+    }
+    else {
+      return [
+        { name: 'Профиль', link: '/profile' },
+        { name: 'Карта', link: '/map' },
+        { name: 'Выйти', action: 'logout' },
       ]
-  }
+    }
+  })
 
   return { menu }
 })

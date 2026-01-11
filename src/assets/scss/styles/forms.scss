@@ -82,7 +82,17 @@ input[type='checkbox']:checked {
   }
 }
 
-.messageError{
+.messageError {
   background: var(--message-error-background);
   color: var(--message-error-text);
+  height: 50px;
+  text-align: center;
+  border-radius: var(--border-radius);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  margin: 0 auto;
+  width: 70%;
 }

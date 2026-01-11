@@ -45,20 +45,33 @@ export const useAuthStore = defineStore('auth', () => {
    * Auth User
    */
   const authUser = ref(localStorage.getItem('user') || '')
-  const authUserData = ref<UserType>()
+  const authUserData = ref<UserType | null>()
   /**
    * Token for auth User
    */
   const token = ref(localStorage.getItem('auth_token') || '')
 
   const location = ref<LngLat>()
-
+  const getAuthUser = async () => {
+    await api.get('/api/user', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
+      },
+    })
+      .then((response) => {
+        authUserData.value = response.data
+      })
+      .catch((error) => {
+        console.error('Ошибка авторизации:', error)
+      })
+  }
   /**
    * get coords for user
    */
   const getLocation = async () => {
     if (!navigator.geolocation) {
       console.error('Ваш браузер не поддерживает геолокацию')
+      getLocation()
       return
     }
     navigator.geolocation.getCurrentPosition(
@@ -69,16 +82,22 @@ export const useAuthStore = defineStore('auth', () => {
         formData.append('lat', lat)
         formData.append('lng', lng)
         try {
-          const response = await api.post('/api/user/location', formData)
-          if (response.status === 200) {
-            echo.channel('map')
-              .listen('.UserAdded', (e: UserResponse) => {
-                const mapUser: UserResponse['user'] = {
-                  ...e.user,
-                }
-                users.value.push(mapUser)
-              })
-          }
+          await api.post('/api/user/location', formData, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
+            },
+          }).then((response) => {
+            if (response.status === 200) {
+              echo.channel('map')
+                .listen('.UserAdded', (e: UserResponse) => {
+                  const mapUser: UserResponse['user'] = {
+                    ...e.user,
+                  }
+                  users.value.push(mapUser)
+                })
+              getAuthUser()
+            }
+          })
         }
         catch (e) {
           console.error('Ошибка отправки координат', e)
@@ -126,6 +145,7 @@ export const useAuthStore = defineStore('auth', () => {
         localStorage.setItem('user', JSON.stringify(authUser.value))
         api.defaults.headers.common.Authorization = `Bearer ${token.value}`
         router.push('/profile')
+        getLocation()
       }
       return response.data
     }
@@ -139,12 +159,15 @@ export const useAuthStore = defineStore('auth', () => {
   const logout = async () => {
     await api.post('/api/logout', {}, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('auth_token') }`,
+        Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
       },
     }).then((response) => {
       if (response.status === 200) {
         localStorage.removeItem('auth_token')
         localStorage.removeItem('user')
+        token.value = ''
+        authUser.value = ''
+        authUserData.value = null
         router.push('/login')
       }
     })
@@ -153,20 +176,6 @@ export const useAuthStore = defineStore('auth', () => {
   const isAuthenticated = computed(() => {
     return !!token.value && !!users.value
   })
-
-  const getAuthUser = async () => {
-    await api.get('/api/user', {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
-      },
-    })
-      .then((response) => {
-        authUserData.value = response.data
-      })
-      .catch((error) => {
-        console.error('Ошибка авторизации:', error)
-      })
-  }
 
   return {
     authUser,

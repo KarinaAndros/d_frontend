@@ -12,3 +12,19 @@ button {
   font-weight: 600;
   font-size: 12px;
 }
+
+//tabs
+.tabs {
+  width: 100%;
+  justify-content: space-between;
+  gap: 12px;
+}
+.tab {
+  width: 50%;
+  text-align: center;
+  padding-bottom: 10px;
+  border-radius: 5px;
+  &-active {
+    border-bottom: 1px solid white;
+  }
+}

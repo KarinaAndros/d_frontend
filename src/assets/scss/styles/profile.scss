@@ -1,5 +1,9 @@
+.profile_page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--profile-gap);
+}
 .profile {
-  margin: 20px;
   padding: 10px;
   border-radius: var(--border-radius);
   background: var(--profile-background);
@@ -7,6 +11,10 @@
   flex-direction: column;
   gap: var(--profile-gap);
   border: 1px solid var(--profile-border-color);
+  &.applications {
+    background: unset;
+    border: none;
+  }
 }
 .profile_avatar {
   max-width: 130px;
@@ -28,4 +36,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: var(--profile-gap);
+}
+ul {
+  list-style: none;
 }

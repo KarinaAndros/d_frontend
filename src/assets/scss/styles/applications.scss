@@ -1,0 +1,30 @@
+.profile_applications {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  overflow: scroll;
+  scroll-snap-type: mandatory;
+  gap: 12px;
+}
+.profile_application {
+  border: 1px solid transparent;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background:
+    $mainGradient padding-box,
+    linear-gradient(90deg, #351056 0%, rgb(123, 123, 123) 100%) border-box;
+  &-description {
+    font-size: 14px;
+  }
+  &-status,
+  &-date {
+    font-size: 12px;
+    background: green;
+    margin-right: 5px;
+    padding: 5px;
+    border-radius: 12px;
+    align-self: flex-end;
+  }
+}

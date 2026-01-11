@@ -5,7 +5,7 @@ import { useMenuStore } from '@/stores/menu'
 const menuStore = useMenuStore()
 const authStore = useAuthStore()
 
-const { menu } = storeToRefs(menuStore)
+const { menu } = toRefs(menuStore)
 </script>
 
 <template>

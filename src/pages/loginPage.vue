@@ -48,7 +48,7 @@ const inputs: InputType[] = [
         class="input-wrapper"
       >
         <InputForm
-          :class="{ error: errors[input.name] && submitCount > 0 }"
+          :class="{ error: errors[input.name] && submitCount > 0 || store.messageError }"
           :name="input.name"
           :model-value="values[input.name]"
           :type="input.type"

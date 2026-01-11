@@ -2,10 +2,12 @@ header {
   position: fixed;
   top: 0;
   width: 100%;
+  z-index: 1;
 }
 .header.active {
   background: var(--header-background);
   align-items: center;
+  padding: 30px;
 }
 
 // burger
@@ -34,7 +36,7 @@ $burgerItems: first, last;
 }
 .burger__line {
   width: 100%;
-  height: 3px;
+  height: 1px;
   border-radius: 2px;
   background-color: var(--color-burger);
   @each $i in $burgerItems {
@@ -46,6 +48,9 @@ $burgerItems: first, last;
 // menu
 .menu__items {
   margin: 0 auto;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   gap: 15px;
   font-size: 14px;
   text-transform: uppercase;

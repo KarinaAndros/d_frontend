@@ -11,11 +11,18 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    Applications: typeof import('./../../components/Modals/users/applications.vue')['default']
+    ApplicationsEdit: typeof import('./../../components/Modals/users/applicationsEdit.vue')['default']
+    ApplicationsProfile: typeof import('./../../components/Users/applicationsProfile.vue')['default']
+    ApplicationsUser: typeof import('./../../components/Modals/users/applicationsUser.vue')['default']
+    copy: typeof import('./../../components/Modals/users/edit copy.vue')['default']
     Edit: typeof import('./../../components/Modals/users/edit.vue')['default']
     Header: typeof import('./../../components/Header/index.vue')['default']
     HeaderMenu: typeof import('./../../components/Header/headerMenu.vue')['default']
     HomeComponent: typeof import('./../../components/homeComponent.vue')['default']
     InputForm: typeof import('./../../components/Forms/inputForm.vue')['default']
+    Interests: typeof import('./../../components/Modals/users/interests.vue')['default']
+    InterestsProfile: typeof import('./../../components/Users/interestsProfile.vue')['default']
     Modals: typeof import('./../../components/Modals/index.vue')['default']
     Registration: typeof import('./../../components/Modals/registration.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

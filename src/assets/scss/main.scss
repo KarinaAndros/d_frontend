@@ -28,9 +28,8 @@
   --profile-gap: 10px;
 
   //errors
-  --message-error-background: red;
-  --message-error-text: #{$colorWhite};
-
+  --message-error-background: rgb(255, 255, 255);
+  --message-error-text: #{$colorBlack};
 }
 
 @import './styles/header.scss';
@@ -39,3 +38,5 @@
 @import './styles/buttons.scss';
 @import './styles/profile.scss';
 @import './styles/modals.scss';
+@import './styles/map.scss';
+@import './styles/applications.scss';
