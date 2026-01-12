@@ -19,15 +19,19 @@ const modalContent = computed<Component | null>(() => {
       class="modal"
       @click.stop
     >
-      <img
-        class="close_icon"
-        src="/icons/close.svg"
-        @click="modalStore.closeModal"
-      >
+      <div class="modal_header">
+        <img
+          class="close_icon"
+          src="/icons/close.svg"
+          @click="modalStore.closeModal"
+        >
+      </div>
+      <div class="modal_body">
       <component
         :is="modalContent"
         v-if="modalContent"
       />
+      </div>
     </div>
   </div>
 </template>

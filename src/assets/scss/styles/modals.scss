@@ -1,7 +1,7 @@
 .modal {
   width: 90%;
   background-color: black;
-  height: inherit;
+  height: max-content;
   margin: 0 auto;
   z-index: 1;
   position: relative;
@@ -13,15 +13,34 @@
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 1;
     background-color: rgba(0, 0, 0, 0.48);
     display: flex;
     align-items: center;
   }
+
+  form{
+    position: unset;
+  transform: none;
+  margin: 0 auto;
+  width: 90%;
+  }
+}
+.modal_header{
+  position: relative;
+  width: 100%;
+  height: 65px;
+}
+.modal_body{
+  padding: 0 0 20px 0;
+  max-height: 400px;
+  overflow: auto;
 }
 .close_icon {
+  position: absolute;
   width: 20px;
   height: 20px;
   top: 20px;
   right: 20px;
-  position: absolute;
+
 }

@@ -9,7 +9,7 @@
 
   // header
   --color-burger: #{$colorWhite};
-  --header-background: #090011bd;
+  --header-background: rgb(9, 0, 17);
 
   // background
   --color-background: #{$colorBlack};
@@ -40,3 +40,4 @@
 @import './styles/modals.scss';
 @import './styles/map.scss';
 @import './styles/applications.scss';
+@import './styles/friends.scss';

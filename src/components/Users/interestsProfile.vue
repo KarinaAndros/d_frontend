@@ -5,8 +5,8 @@ import { useInterestStore } from '@/stores/interests'
 import { useModalStore } from '@/stores/modal'
 
 // props
-defineProps<{
-  interests?: InterestTypeProfile[]
+const props = defineProps<{
+  interests: InterestTypeProfile[]
   categories?: InterestCategories[]
 }>()
 
@@ -17,6 +17,15 @@ const interestsStore = useInterestStore()
 // values
 const editInt = ref<boolean>(false)
 const activeTab = ref<number>(1)
+
+  const filteredInterests = computed(() => {
+  if (!activeTab.value) {
+    return props.interests
+  }
+  return props.interests.filter(
+    interest => interest.category.id === activeTab.value
+  )
+})
 
 // functions
 function editInterests() {
@@ -40,12 +49,12 @@ function removeInterest(int: number) {
     </div>
   </div>
   <div
-    v-if="interests && interests.length > 0"
+    v-if="filteredInterests && filteredInterests.length > 0"
     class="profile_interests"
   >
     <ul>
       <li
-        v-for="int in interests"
+        v-for="int in filteredInterests"
 
         :key="int.id"
       >

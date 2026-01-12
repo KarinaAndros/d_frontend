@@ -10,6 +10,8 @@ export interface UserType {
   email: string
   email_verified_at?: string
   applications?: ApplicationType[]
+  active_applications?: ApplicationType[]
+  interests?: InterestType[]
   id: number
   lat: number
   lng: number
@@ -55,6 +57,7 @@ export interface InterestCategories {
 }
 
 export interface InterestType {
+  id?: number
   user_id: number
   title: string
   description?: string | null

@@ -5,7 +5,10 @@ const modalStore = useModalStore()
 </script>
 
 <template>
-  <div v-if="modalStore.modal.applications && modalStore.modal.applications.length > 0">
+  <div
+    v-if="modalStore.modal.applications && modalStore.modal.applications.length > 0"
+    class="applications"
+  >
     <div
       v-for="app in modalStore.modal.applications"
       :key="app.id"
@@ -27,10 +30,8 @@ const modalStore = useModalStore()
         <div class="profile_application-date">
           {{ app.new_time }}
         </div>
-        <div class="profile_application-status">
-          {{ app.status.title }}
-        </div>
       </div>
+      <span>записаться</span>
     </div>
   </div>
 </template>

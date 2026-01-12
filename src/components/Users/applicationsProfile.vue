@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import type { ApplicationStatuses, ApplicationType } from '@/types'
+import { storeToRefs } from 'pinia'
 import { useApplicationStore } from '@/stores/applications'
 import { useModalStore } from '@/stores/modal'
 import ApplicationsEdit from '../Modals/users/applicationsEdit.vue'
 
 // props
-defineProps<{
-  applications?: ApplicationType[]
+const props = defineProps<{
+  applications: ApplicationType[]
   statuses?: ApplicationStatuses[]
 }>()
 
@@ -16,6 +17,15 @@ const applicationsStore = useApplicationStore()
 
 // values
 const activeTab = ref<number>(1)
+
+const filteredApplications = computed(() => {
+  if (!activeTab.value) {
+    return props.applications
+  }
+  return props.applications.filter(
+    application => application.status.id === activeTab.value
+  )
+})
 
 // functions
 function editApplications(app: ApplicationType) {
@@ -40,17 +50,15 @@ function removeApplication(int: number) {
     </div>
   </div>
   <ul
-    v-if="applications && applications.length > 0"
+    v-if="filteredApplications && filteredApplications.length > 0"
     class="profile_applications"
   >
     <li
-      v-for="app in applications"
+      v-for="app in filteredApplications"
       :key="app.id"
+      class="profile_application"
     >
-      <div
-        v-if="app.status.id === activeTab"
-        class="profile_application"
-      >
+
         <div class="profile_application-title">
           {{ app.title }}
         </div>
@@ -76,7 +84,6 @@ function removeApplication(int: number) {
           @click="removeApplication(app.id)"
         >удалить</span>
         <span @click="editApplications(app)">редактировать</span>
-      </div>
     </li>
   </ul>
 

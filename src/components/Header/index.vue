@@ -1,9 +1,9 @@
 <script setup lang="ts">
-const menuActive = ref<boolean>(false)
+const menuActive = ref<boolean>(true)
 
-function menuFunction() {
-  menuActive.value = !menuActive.value
-}
+// function menuFunction() {
+//   menuActive.value = !menuActive.value
+// }
 </script>
 
 <template>
@@ -12,7 +12,7 @@ function menuFunction() {
       class="container header flex_row"
       :class="{ active: menuActive }"
     >
-      <div
+      <!-- <div
         class="burger flex_column"
         :class="{ active: menuActive }"
         @click="menuFunction"
@@ -22,7 +22,7 @@ function menuFunction() {
           :key="i"
           class="burger__line"
         />
-      </div>
+      </div> -->
       <HeaderMenu v-if="menuActive" />
     </div>
   </header>

@@ -1,0 +1,45 @@
+.friends_block{
+  bottom: 0;
+  width: 100%;
+  display: block;
+  background: #fcfcf7;
+  position: absolute;
+  border-top: 1px solid $mainColor;
+  left: 50%;
+  transform: translateX(-50%);
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  text-align: center;
+  color: $colorBlack;
+  z-index: 1;
+}
+.friends{
+    display: flex;
+    margin-top: 10px;
+  flex-direction: row;
+  width: 100%;
+  overflow: auto;
+  padding-bottom: 10px;
+  gap: 10px;
+  justify-content: center;
+}
+
+.friends_slide{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 20%;
+  &.carousel__slide--active{
+      img{
+    width: 80px;
+    border-radius: 100%;
+    height: 80px;
+  }
+  }
+  img{
+    width: 60px;
+    border-radius: 100%;
+    height: 60px;
+  }
+  text-align: center;
+}

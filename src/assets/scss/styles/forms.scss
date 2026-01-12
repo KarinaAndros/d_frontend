@@ -15,7 +15,7 @@ form {
 }
 
 //inputs
-input {
+input, textarea, #categories {
   width: 100%;
   height: 40px;
   border: 1px solid transparent;
@@ -80,6 +80,24 @@ input[type='checkbox']:checked {
     background: $mainColor;
     z-index: 1;
   }
+}
+
+textarea{
+  width: 100%;
+  height: 150px;
+  padding-top: 10px;
+}
+
+#categories{
+  width: 100%;
+}
+
+.select{
+  position: relative;
+}
+
+.options{
+  position: absolute;
 }
 
 .messageError {

@@ -1,4 +1,4 @@
-import type { ApplicationType } from '@/types'
+import type { ApplicationType, InterestType } from '@/types'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import api from '@/api'
@@ -12,6 +12,7 @@ export interface MapUser {
   email: string
   email_verified_at?: string
   active_applications?: ApplicationType[] | null
+  interests?: InterestType[] | null
   id: number
   lat: number
   lng: number

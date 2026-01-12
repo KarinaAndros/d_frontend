@@ -17,6 +17,7 @@
         "vue": "^3.5.25",
         "vue-router": "^4.6.3",
         "vue-yandex-maps": "^2.2.5",
+        "vue3-carousel": "^0.17.0",
         "zod": "^4.1.13",
       },
       "devDependencies": {
@@ -1076,6 +1077,8 @@
     "vue-tsc": ["vue-tsc@3.1.5", "", { "dependencies": { "@volar/typescript": "2.4.23", "@vue/language-core": "3.1.5" }, "peerDependencies": { "typescript": ">=5.0.0" }, "bin": "bin/vue-tsc.js" }, ""],
 
     "vue-yandex-maps": ["vue-yandex-maps@2.2.5", "", { "dependencies": { "@yandex/ymaps3-context-menu": ">=0.0.2", "@yandex/ymaps3-default-ui-theme": ">=0.0.21", "@yandex/ymaps3-drawer-control": ">=0.0.2", "@yandex/ymaps3-minimap": ">=0.0.4", "@yandex/ymaps3-resizer": ">=0.0.2", "@yandex/ymaps3-signpost": ">=0.0.2", "@yandex/ymaps3-spinner": ">=0.0.2", "@yandex/ymaps3-types": ">=1.0.18043255", "@yandex/ymaps3-world-utils": ">=0.0.18043255" }, "peerDependencies": { "@vue/composition-api": ">=1", "nuxt": ">=2.16 || >=3", "vue": ">=2.7 || >=3.3" }, "optionalPeers": ["@vue/composition-api", "nuxt"] }, "sha512-8LGRWzFMVPV3zz1LHRyZ47EO4e0M2fuR8kUIAh64Lu90YmeOt7/nxp4raNqM4UfM8RU0eeHbiRmnzRxGCzZy0A=="],
+
+    "vue3-carousel": ["vue3-carousel@0.17.0", "", { "peerDependencies": { "vue": "^3.5.0" } }, "sha512-kvb2CRpsEtLGSbiOq/fXfayMJeiwMMjnNSbqWI/Ee7tgfY/ofNanRuhpd7WRVtDdzJY1HvygdLawlBhIyJTM2w=="],
 
     "webpack-virtual-modules": ["webpack-virtual-modules@0.6.2", "", {}, ""],
 

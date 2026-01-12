@@ -86,23 +86,27 @@ onMounted(() => [
         {{ errors.description }}
       </span>
     </div>
-    <div>
-      <label>Выберите категорию</label>
-      <select
-        v-if="categories"
-        id="categories"
-        v-bind="selectAttrs"
-        v-model="categoryInterest"
-        name="categories"
-      >
-        <option
-          v-for="value in categories"
-          :key="value.id"
-          :value="value.id"
+    <div class="select">
+      <label>Выберите категорию
+        <select
+          v-if="categories"
+          id="categories"
+          v-bind="selectAttrs"
+          v-model="categoryInterest"
+          name="categories"
         >
-          {{ value.title }}
-        </option>
-      </select>
+          <div class="options">
+            <option
+              v-for="value in categories"
+              :key="value.id"
+              :value="value.id"
+            >
+              {{ value.title }}
+            </option>
+          </div>
+
+        </select>
+      </label>
       <span
         v-if="errors.interest_category_id && submitCount > 0"
         class="error"
