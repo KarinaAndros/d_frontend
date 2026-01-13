@@ -18,7 +18,7 @@ const interestsStore = useInterestStore()
 const editInt = ref<boolean>(false)
 const activeTab = ref<number>(1)
 
-  const filteredInterests = computed(() => {
+const filteredInterests = computed(() => {
   if (!activeTab.value) {
     return props.interests
   }

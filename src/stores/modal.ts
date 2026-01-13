@@ -1,5 +1,5 @@
 import type { Component } from 'vue'
-import type { ApplicationType, UserType } from '@/types'
+import type { ApplicationType, ResponseType, UserType } from '@/types'
 
 interface ModalType {
   modal_content: Component | null
@@ -16,6 +16,7 @@ export const useModalStore = defineStore('modal', () => {
     application: null,
     applications: null,
   })
+  const responsesModal = ref<ResponseType[]>([])
 
   const openModal = (content: Component, user?: UserType | null, application?: ApplicationType | null, applications?: ApplicationType[] | null) => {
     modalActive.value = true
@@ -31,15 +32,22 @@ export const useModalStore = defineStore('modal', () => {
     }
   }
 
+  const setResponses = (responses: ResponseType[]) =>{
+    responsesModal.value = responses
+  }
+
   const closeModal = () => {
     modalActive.value = false
     modal.value.modal_content = null
+    responsesModal.value = []
   }
 
   return {
     modal,
     modalActive,
+    responsesModal,
     openModal,
     closeModal,
+    setResponses
   }
 })

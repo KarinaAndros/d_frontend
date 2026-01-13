@@ -15,7 +15,7 @@ declare module 'vue' {
     ApplicationsEdit: typeof import('./../../components/Modals/users/applicationsEdit.vue')['default']
     ApplicationsProfile: typeof import('./../../components/Users/applicationsProfile.vue')['default']
     ApplicationsUser: typeof import('./../../components/Modals/users/applicationsUser.vue')['default']
-    copy: typeof import('./../../components/Modals/users/edit copy.vue')['default']
+    copy: typeof import('./../../components/../../components/Modals/users/responses.vue
     Edit: typeof import('./../../components/Modals/users/edit.vue')['default']
     Header: typeof import('./../../components/Header/index.vue')['default']
     HeaderMenu: typeof import('./../../components/Header/headerMenu.vue')['default']
@@ -25,6 +25,7 @@ declare module 'vue' {
     InterestsProfile: typeof import('./../../components/Users/interestsProfile.vue')['default']
     Modals: typeof import('./../../components/Modals/index.vue')['default']
     Registration: typeof import('./../../components/Modals/registration.vue')['default']
+    Responses: typeof import('./../../components/Modals/users/responses.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

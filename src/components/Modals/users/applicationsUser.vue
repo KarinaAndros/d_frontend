@@ -1,7 +1,27 @@
 <script setup lang="ts">
+import type { UserType } from '@/types'
+import { useAuthStore } from '@/stores/auth'
 import { useModalStore } from '@/stores/modal'
+import { useResponseStore } from '@/stores/responses'
 
 const modalStore = useModalStore()
+const responseStore = useResponseStore()
+const authStore = useAuthStore()
+
+const authUser = ref<UserType | null>()
+
+function newResponse(id: number) {
+  responseStore.storeResponse(id)
+}
+
+// watches
+watch(() => authStore.authUserData, (newVal) => {
+  authUser.value = newVal
+}, { deep: true, immediate: true })
+
+onMounted(() => {
+  authStore.getAuthUser()
+})
 </script>
 
 <template>
@@ -31,7 +51,7 @@ const modalStore = useModalStore()
           {{ app.new_time }}
         </div>
       </div>
-      <span>записаться</span>
+      <span @click="newResponse(app.id)">записаться</span>
     </div>
   </div>
 </template>

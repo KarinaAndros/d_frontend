@@ -105,6 +105,7 @@ export interface ApplicationType {
   created_at: string
   updated_at: string
   description?: string | null
+  responses?: ResponseType[]
   date: string
   new_date: string
   time: string
@@ -112,4 +113,10 @@ export interface ApplicationType {
   application_status_id: number
   user_id: number
   status: ApplicationStatuses
+}
+
+export interface ResponseType {
+  user_id: number | '',
+  application_id: number,
+  response_status_id: number,
 }
