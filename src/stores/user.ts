@@ -1,16 +1,8 @@
 import api from '@/api'
-import router from '@/router'
 import { useAuthStore } from './auth'
 import { useModalStore } from './modal'
 
 export const useUserStore = defineStore('user', () => {
-  // interface EditUserData {
-  //   name: string
-  //   surname: string | null
-  //   date: string | null
-  //   avatar?: File | null
-  // }
-
   const editUserData = async (values: FormData) => {
     await api.post(`/api/users/update`, values, {
       headers: {
@@ -24,7 +16,6 @@ export const useUserStore = defineStore('user', () => {
       }
     })
   }
-
   return {
     editUserData,
   }

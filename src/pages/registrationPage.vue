@@ -13,6 +13,8 @@ const { values, errors, handleSubmit, defineField, setFieldValue, submitCount } 
 })
 const [agree, agreeAttrs] = defineField('agree')
 
+let errorTimer: ReturnType<typeof setTimeout> | null = null
+
 const submitForm = handleSubmit(async (values) => {
   authStore.registration(values)
 })
@@ -44,6 +46,17 @@ const inputs: InputTypeReg[] = [
     placeholder: 'повтор пароля',
   },
 ]
+watch(() => authStore.messageError, (newError) => {
+  if (newError && newError.type === 'reg') {
+    if (errorTimer) clearTimeout(errorTimer)
+    errorTimer = setTimeout(() => {
+      authStore.messageError = {
+        type: '',
+        message: ''
+      } 
+    }, 2000)
+  }
+})
 </script>
 
 <template>
@@ -52,6 +65,12 @@ const inputs: InputTypeReg[] = [
       class="flex_column"
       @submit="submitForm"
     >
+       <div
+        v-if="authStore.messageError && authStore.messageError.type === 'reg'"
+        class="messageError"
+      >
+        {{ authStore.messageError.message }}
+      </div>
       <div
         v-for="input in inputs"
         :key="input.name"
@@ -75,7 +94,7 @@ const inputs: InputTypeReg[] = [
       <button type="submit">
         Зарегистрироваться
       </button>
-      <div>
+      <div class="input-wrapper">
         <label name="agree">
           <input
             v-model="agree"

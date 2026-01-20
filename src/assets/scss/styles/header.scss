@@ -55,4 +55,8 @@ $burgerItems: first, last;
   font-size: 14px;
   text-transform: uppercase;
   font-weight: lighter;
+  .router-link-active{
+    border-bottom: 1px solid $colorWhite;
+    padding-bottom: 5px;
+  }
 }

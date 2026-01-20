@@ -29,11 +29,11 @@ interestsStore.getInterestsCategories()
 
 // functions
 function editProfile() {
-  modalStore.openModal(Edit, authUser.value)
+  modalStore.openModal(Edit, "Редактирование", authUser.value)
 }
 
 function addApplications() {
-  modalStore.openModal(Applications)
+  modalStore.openModal(Applications, "Новая заявка")
 }
 
 // watches
@@ -81,6 +81,14 @@ watch(() => interestsStore.interestsCategories, (newVal) => {
           v-if="authUser.new_date"
           class="profile_birth"
         >
+            <span
+            class="icon"
+          >
+            <img
+              class="remove_icon"
+              src="/icons/date.svg"
+            >
+          </span>
           {{ authUser.new_date }}
         </div>
       </div>
@@ -99,8 +107,7 @@ watch(() => interestsStore.interestsCategories, (newVal) => {
         </button>
       </div>
     </div>
-
-    <div
+        <div
       class="profile"
     >
       <InterestsProfile

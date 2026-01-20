@@ -3,6 +3,12 @@ import type { InterestCategories, InterestTypeProfile } from '@/types'
 import Interests from '@/components/Modals/users/interests.vue'
 import { useInterestStore } from '@/stores/interests'
 import { useModalStore } from '@/stores/modal'
+import InterestsUser from '../Modals/users/interestsUser.vue'
+
+interface TabType {
+  id: number,
+  title: string
+}
 
 // props
 const props = defineProps<{
@@ -16,14 +22,17 @@ const interestsStore = useInterestStore()
 
 // values
 const editInt = ref<boolean>(false)
-const activeTab = ref<number>(1)
+const activeTab = ref<TabType>({
+  id: 1,
+  title: 'спорт'
+})
 
 const filteredInterests = computed(() => {
   if (!activeTab.value) {
     return props.interests
   }
   return props.interests.filter(
-    interest => interest.category.id === activeTab.value
+    interest => interest.category.id === activeTab.value.id,
   )
 })
 
@@ -34,6 +43,10 @@ function editInterests() {
 function removeInterest(int: number) {
   interestsStore.deleteInterest(int)
 }
+function moreInterests() {
+  modalStore.setInterests(filteredInterests.value)
+  modalStore.openModal(InterestsUser, activeTab.value.title)
+}
 </script>
 
 <template>
@@ -42,8 +55,11 @@ function removeInterest(int: number) {
       v-for="cat in categories"
       :key="cat.id"
       class="tab"
-      :class="{ 'tab-active': cat.id === activeTab }"
-      @click="activeTab = cat.id"
+      :class="{ 'tab-active': cat.id === activeTab.id }"
+      @click="activeTab = {
+        id:cat.id,
+        title:cat.title
+      }"
     >
       {{ cat.title }}
     </div>
@@ -54,16 +70,23 @@ function removeInterest(int: number) {
   >
     <ul>
       <li
-        v-for="int in filteredInterests"
+        v-for="int in filteredInterests.slice(0, 2)"
 
         :key="int.id"
       >
-        <template v-if="int.category.id === activeTab">
+        <template v-if="int.category.id === activeTab.id">
           {{ int.title }}
+
           <span
             v-if="editInt"
+            class="icon"
             @click="removeInterest(int.id)"
-          >X</span>
+          >
+            <img
+              class="remove_icon"
+              src="/icons/remove.svg"
+            >
+          </span>
         </template>
       </li>
     </ul>
@@ -71,18 +94,38 @@ function removeInterest(int: number) {
   <div v-else>
     Пока что пусто :(
   </div>
-  <div class="profile_buttons">
-    <button
-      class="button"
-      @click="editInterests"
+  <div class="interests_buttons">
+    <span
+      v-if="filteredInterests.length > 2"
+      class="icon"
+      @click="moreInterests"
     >
-      Добавить
-    </button>
-    <button
-      class="button"
-      @click="editInt = !editInt"
-    >
-      Изменить
-    </button>
+      <img
+        class="right_icon"
+        src="/icons/right.svg"
+      >
+    </span>
+    <div class="interests_buttons">
+      <span
+        class="icon"
+        @click="editInterests"
+      >
+        <img
+          class="add_icon"
+          src="/icons/add.svg"
+        >
+      </span>
+      <span
+        v-if="filteredInterests.length > 0"
+        class="icon"
+        :class="{ active: editInt }"
+        @click="editInt = !editInt"
+      >
+        <img
+          class="edit_icon"
+          src="/icons/edit.svg"
+        >
+      </span>
+    </div>
   </div>
 </template>

@@ -8,6 +8,8 @@ const validationSchema = loginSchema
 
 const store = useAuthStore()
 
+let errorTimer: ReturnType<typeof setTimeout> | null = null
+
 const { values, errors, handleSubmit, setFieldValue, submitCount } = useForm({
   validationSchema,
 })
@@ -28,20 +30,34 @@ const inputs: InputType[] = [
     placeholder: 'пароль',
   },
 ]
+
+watch(() => store.messageError, (newError) => {
+  if (newError && newError.type === 'login') {
+    if (errorTimer) clearTimeout(errorTimer)
+    errorTimer = setTimeout(() => {
+      store.messageError = {
+        type: '',
+        message: ''
+      } 
+    }, 2000)
+  }
+})
 </script>
 
 <template>
   <div class="home">
-    <div
-      v-if="store.messageError"
-      class="messageError"
-    >
-      {{ store.messageError }}
-    </div>
     <form
       class="flex_column"
       @submit="submitForm"
     >
+    <Transition name="fade">
+      <div
+        v-if="store.messageError?.message && store.messageError.type === 'login'"
+        class="messageError"
+      >
+        {{ store.messageError.message }}
+      </div>
+    </Transition>
       <div
         v-for="input in inputs"
         :key="input.name"

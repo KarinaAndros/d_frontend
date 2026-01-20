@@ -5,7 +5,7 @@
   overflow: auto;
 }
 .profile {
-  padding: 10px;
+  padding: 20px;
   border-radius: var(--border-radius);
   background: var(--profile-background);
   display: flex;
@@ -14,12 +14,19 @@
   border: 1px solid var(--profile-border-color);
   &.applications {
     background: unset;
+    padding: 0;
     border: none;
   }
 }
+.profile_birth{
+  display: flex;
+  flex-direction: row;
+  gap: 7px;
+  align-items: center;
+}
 .profile_avatar {
-  max-width: 130px;
-  height: 130px;
+  max-width: 120px;
+  height: 120px;
   border: 2px solid transparent;
   background:
     $mainGradient padding-box,
@@ -38,6 +45,51 @@
   grid-template-columns: repeat(2, 1fr);
   gap: var(--profile-gap);
 }
+.interests_buttons{
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  gap: 10px;
+  span{
+    border: 1px solid transparent;
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background:
+    $mainGradient padding-box,
+    linear-gradient(90deg, #351056 0%, rgb(123, 123, 123) 100%) border-box;
+    padding: 15px;
+    &.active{
+      background:$mainGradientActive padding-box,
+      linear-gradient(90deg, #ffffff 0%, rgb(255, 255, 255) 100%) border-box;
+    }
+    img{
+      width: 15px;
+    }
+  }
+}
+.icon{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.remove_icon{
+  width: 15px;
+}
+
 ul {
   list-style: none;
+}
+.profile_interests{
+  li{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+  }
 }

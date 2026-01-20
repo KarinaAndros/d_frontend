@@ -1,7 +1,7 @@
 //forms
 form {
   gap: 12px;
-  width: 70%;
+  width: 80%;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -10,17 +10,17 @@ form {
     width: 100%;
   }
   span {
-    font-size: 12px;
+    font-size: 14px;
   }
 }
 
 //inputs
 input, textarea, #categories {
   width: 100%;
-  height: 40px;
+  height: 48px;
   border: 1px solid transparent;
   border-radius: $border-radius;
-  padding-left: 10px;
+  padding: 0 10px;
   background:
     linear-gradient(var(--inputs-background)) padding-box,
     $mainGradient border-box;
@@ -30,8 +30,27 @@ input, textarea, #categories {
     color: var(--inputs-color);
   }
   &.error {
-    border: 1px solid red;
+    border: 1px solid var(--message-error-border);
   }
+}
+
+input[type="file"] {
+  color: $mainColor;
+}
+
+input[type="file"]::file-selector-button {
+
+  border: none;
+  background: transparent;
+  outline: none;
+  padding: 13px 0;
+  border-radius: 10px;
+  display: none;
+  cursor: pointer;
+  &:hover{
+    background: none;
+  }
+
 }
 
 //checkboxes
@@ -50,8 +69,8 @@ label[name='agree'] {
 
 input[type='checkbox'],
 input[type='checkbox']:checked {
-  height: 15px;
-  width: 15px;
+  height: 20px;
+  width: 20px;
   border: 2px solid $mainColor;
   position: relative;
   &:after {
@@ -108,9 +127,15 @@ textarea{
   border-radius: var(--border-radius);
   display: flex;
   flex-direction: row;
+  font-weight: bold;
   align-items: center;
   justify-content: center;
   padding: 10px;
   margin: 0 auto;
-  width: 70%;
+  width: 100%;
+}
+.input-wrapper{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }

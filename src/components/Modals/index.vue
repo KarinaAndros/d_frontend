@@ -20,6 +20,7 @@ const modalContent = computed<Component | null>(() => {
       @click.stop
     >
       <div class="modal_header">
+        <div class="modal_header-title">{{ modal.title }}</div>
         <img
           class="close_icon"
           src="/icons/close.svg"

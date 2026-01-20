@@ -41,8 +41,7 @@ function allResponses(val: ResponseType[]){
 </script>
 
 <template>
-  Заявки:
-  <div class="tabs flex_row">
+  <!-- <div class="tabs flex_row">
     <div
       v-for="status in statuses"
       :key="status.id"
@@ -52,12 +51,12 @@ function allResponses(val: ResponseType[]){
     >
       {{ status.title }}
     </div>
-  </div>
-  <ul
+  </div> -->
+  <div
     v-if="filteredApplications && filteredApplications.length > 0"
     class="profile_applications"
   >
-    <li
+    <div
       v-for="app in filteredApplications"
       :key="app.id"
       class="profile_application"
@@ -93,8 +92,8 @@ function allResponses(val: ResponseType[]){
         @click="removeApplication(app.id)"
       >удалить</span>
       <span @click="editApplications(app)">редактировать</span>
-    </li>
-  </ul>
+    </div>
+  </div>
 
   <div v-else>
     Пока что пусто :(

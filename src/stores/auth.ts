@@ -38,9 +38,18 @@ export const useAuthStore = defineStore('auth', () => {
     password_confirmation: string
     agree: boolean
   }
+
+  interface MessageErrorType {
+    type: string
+    message: string
+  }
+
   const users = ref<UserResponse['user'][]>([])
 
-  const messageError = ref<string>()
+  const messageError = ref<MessageErrorType>({
+    type: '',
+    message: ''
+  })
   /**
    * Auth User
    */
@@ -128,6 +137,12 @@ export const useAuthStore = defineStore('auth', () => {
       return response.data
     }
     catch (error: any) {
+      if (messageError.value && error.status === 422) {
+        messageError.value = {
+          type: 'reg',
+          message: error.response.data.message
+        }
+      }
       console.error(error)
     }
   }
@@ -150,9 +165,13 @@ export const useAuthStore = defineStore('auth', () => {
       return response.data
     }
     catch (error: any) {
-      if (error.response.status === 401) {
-        messageError.value = error.response.data.message
+      if (messageError.value && error.response.status === 401) {
+        messageError.value = {
+          type: 'login',
+          message: error.response.data.message
+        }
       }
+      console.error(error)
     }
   }
 
