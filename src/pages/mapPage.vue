@@ -3,12 +3,11 @@ import type { MapUser } from '@/stores/map'
 import type { ApplicationType, UserType } from '@/types'
 import { storeToRefs } from 'pinia'
 import { onMounted, onUnmounted, shallowRef } from 'vue'
-
 import { Carousel, Navigation, Slide } from 'vue3-carousel'
-
 import { YandexMap, YandexMapDefaultFeaturesLayer, YandexMapDefaultSchemeLayer, YandexMapMarker } from 'vue-yandex-maps'
 import api from '@/api'
 import ApplicationsUser from '@/components/Modals/users/applicationsUser.vue'
+import { useApplicationStore } from '@/stores/applications'
 import { useAuthStore } from '@/stores/auth'
 import { useMapStore } from '@/stores/map'
 import { useModalStore } from '@/stores/modal'
@@ -16,9 +15,11 @@ import echo from '../../resources/js/echo'
 import 'vue3-carousel/carousel.css'
 
 const map = shallowRef(null)
-const mapSettings = { location: { center: [44.006516, 56.326797], zoom: 12 } }
+const mapSettings = ref<any>({ location: { center: [44.006516, 56.326797], zoom: 17 } })
 
 const authStore = useAuthStore()
+const applicationsStore = useApplicationStore()
+const { activeApplications: allApplications } = storeToRefs(applicationsStore)
 const mapStore = useMapStore()
 const { authUserData: me } = storeToRefs(authStore)
 const otherUsers = ref<MapUser[]>([])
@@ -53,7 +54,7 @@ function startTracking() {
 }
 
 function openModal(val: ApplicationType[]) {
-  useModalStore().openModal(ApplicationsUser, null, null, val)
+  useModalStore().openModal(ApplicationsUser, 'Помощь другим', null, null, val)
 }
 
 const carouselConfig = {
@@ -61,6 +62,10 @@ const carouselConfig = {
   itemsToShow: 3,
   wrapAround: true,
 }
+
+watch(me, (newMe) => {
+  mapSettings.value = { location: { center: [newMe?.lng, newMe?.lat], zoom: 17 } }
+})
 
 watch(() => authStore.authUserData, (newVal) => {
   authUser.value = newVal
@@ -88,6 +93,7 @@ watch(() => mapStore.users, (newVal) => {
 
 onMounted(() => {
   mapStore.fetchUsers()
+  applicationsStore.getActiveApplications()
   startTracking()
   echo.channel('map')
     .listen('.UserAdded', (e: any) => {
@@ -103,7 +109,19 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="map">
+  <div
+    class="map"
+  >
+    <div
+      v-if="allApplications && allApplications.length > 0"
+      class="active_apps_btn"
+      @click="openModal(allApplications)"
+    >
+      <img
+        class="edit_icon"
+        src="/icons/help.svg"
+      >
+    </div>
     <yandex-map
       v-model="map"
       class="map-container"
@@ -111,6 +129,21 @@ onUnmounted(() => {
     >
       <yandex-map-default-scheme-layer />
       <yandex-map-default-features-layer />
+      <yandex-map-marker
+        v-if="me"
+        :settings="{
+          coordinates: [Number(me.lng), Number(me.lat)],
+          zIndex: 10,
+        }"
+      >
+        <div class="custom-marker">
+          <img
+            :src="me.avatar_url"
+            class="avatar"
+          >
+          <span class="name">{{ me.name }}</span>
+        </div>
+      </yandex-map-marker>
       <yandex-map-marker
         v-for="user in otherUsers"
         :key="user.id"
@@ -124,13 +157,6 @@ onUnmounted(() => {
             :src="user.avatar_url"
             class="avatar"
           >
-          <div
-            v-if="user.active_applications && user.active_applications.length > 0"
-            class="user_apps"
-            @click="openModal(user.active_applications)"
-          >
-            !
-          </div>
           <span class="name">{{ user.name }}</span>
         </div>
       </yandex-map-marker>
@@ -142,7 +168,6 @@ onUnmounted(() => {
     class="friends_block container"
   >
     <div>Люди с схожими интересами</div>
-
     <carousel v-bind="carouselConfig">
       <slide
         v-for="user in usersWithCommonInterests"
@@ -158,27 +183,9 @@ onUnmounted(() => {
           {{ user.name }} {{ user?.surname }}
         </div>
       </slide>
-
       <template #addons>
         <navigation />
       </template>
     </carousel>
-
-    <!-- <div class="friends">
-      <div
-        v-for="user in usersWithCommonInterests"
-        :key="user.id"
-        class="friend"
-      >
-        <img
-          v-if="user?.avatar_url"
-          loading="lazy"
-          :src="user?.avatar_url"
-        >
-        <div class="profile_name">
-          {{ user.name }} {{ user?.surname }}
-        </div>
-      </div>
-    </div> -->
   </div>
 </template>

@@ -12,7 +12,7 @@ interface TabType {
 
 // props
 const props = defineProps<{
-  interests: InterestTypeProfile[]
+  interests?: InterestTypeProfile[]
   categories?: InterestCategories[]
 }>()
 
@@ -28,11 +28,12 @@ const activeTab = ref<TabType>({
 })
 
 const filteredInterests = computed(() => {
+  if (!props.interests) return []
   if (!activeTab.value) {
     return props.interests
   }
   return props.interests.filter(
-    interest => interest.category.id === activeTab.value.id,
+    interest => interest.category?.id === activeTab.value.id
   )
 })
 

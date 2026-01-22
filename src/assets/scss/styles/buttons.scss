@@ -12,6 +12,28 @@ button {
   font-weight: 600;
   font-size: 12px;
 }
+.active_apps_btn{
+  background: var(--header-background);
+  color: var(--message-error-text);
+  border-radius: 100%;
+  padding: 20px;
+  width: 60px;
+  display: flex;
+  flex-direction: column;
+  right: 20px;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  height: 60px;
+  font-size: 30px;
+  position: absolute;
+  top: 80px;
+  z-index: 1;
+  img{
+    width: 40px;
+
+  }
+}
 
 //tabs
 .tabs {

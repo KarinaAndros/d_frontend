@@ -1,4 +1,5 @@
 import api from '@/api'
+import { useAuthStore } from './auth'
 
 export const useResponseStore = defineStore('responses', () => {
   const storeResponse = async (id_app: number) => {
@@ -9,6 +10,10 @@ export const useResponseStore = defineStore('responses', () => {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
       },
+    }).then((response)=>{
+      if(response.status === 200){
+        useAuthStore().getAuthUser()
+      }
     })
   }
   return {

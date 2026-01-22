@@ -32,26 +32,42 @@ onMounted(() => {
     <div
       v-for="app in modalStore.modal.applications"
       :key="app.id"
-      class="profile_application"
+      class="modal_application"
     >
-      <div class="profile_application-title">
+      <div class="modal_application-title">
         {{ app.title }}
+        <img
+          v-if="app.user"
+          class="modal_application-avatar"
+          :src="app.user.avatar_url"
+        >
       </div>
       <div
         v-if="app.description"
-        class="profile_application-description"
+        class="modal_application-description"
       >
         {{ app.description }}
       </div>
-      <div class="flex_row">
-        <div class="profile_application-date">
-          {{ app.new_date }}
+      <div class="flex_row modal_application-bottom">
+        <div class="flex_row">
+          <div class="modal_application-date">
+            {{ app.new_date }}
+          </div>
+          <div class="modal_application-date">
+            {{ app.new_time }}
+          </div>
         </div>
-        <div class="profile_application-date">
-          {{ app.new_time }}
-        </div>
+        <span
+          v-if="authUser?.responses?.length
+            && authUser?.responses.find(el => el.application_id === app.id)"
+        >вы откликнулись</span>
+        <button
+          v-else
+          @click="newResponse(app.id)"
+        >
+          откликнуться
+        </button>
       </div>
-      <span @click="newResponse(app.id)">записаться</span>
     </div>
   </div>
 </template>

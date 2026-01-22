@@ -45,7 +45,7 @@
   grid-template-columns: repeat(2, 1fr);
   gap: var(--profile-gap);
 }
-.interests_buttons{
+.interests_buttons, .applications_buttons{
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-between;
@@ -72,6 +72,14 @@
     }
   }
 }
+.applications_buttons{
+  justify-content: flex-start;
+}
+.application_buttom{
+  align-items: center;
+  justify-content: space-between;
+}
+
 .icon{
   display: flex;
   flex-direction: column;

@@ -1,14 +1,24 @@
-import type { ApplicationStatuses, ApplicationType, ApplicationTypeForm, InterestTypeProfile } from '../types/index'
+import type { ApplicationStatuses, ApplicationType, ApplicationTypeForm } from '../types/index'
 import api from '@/api'
 import { useModalStore } from './modal'
 
 export const useApplicationStore = defineStore('applications', () => {
+  //values
   const applicationsUser = ref<[]>()
-
+  const activeApplications = ref<ApplicationType[]>()
   const applications = ref<ApplicationType[]>()
-
   const statuses = ref<ApplicationStatuses[]>()
 
+  //functions
+  const getActiveApplications = async() =>{
+    await api.get('/api/applications', {
+      headers:{
+        Authorization: `Bearer ${localStorage.getItem('auth_token')}`,
+      }
+    }).then((response)=>{
+      activeApplications.value = response.data
+    })
+  }
   const getApplicationsStatuses = async () => {
     await api.get('/api/applications-statuses').then((response) => {
       if (response.status === 200) {
@@ -16,8 +26,6 @@ export const useApplicationStore = defineStore('applications', () => {
       }
     })
   }
-
-
   const getApplications = async () => {
     await api.get('/api/user/applications', {
       headers: {
@@ -29,7 +37,6 @@ export const useApplicationStore = defineStore('applications', () => {
       }
     })
   }
-
   const storeApplication = async (values: ApplicationTypeForm) => {
     await api.post('/api/applications', values).then((response) => {
       if (response.status === 200) {
@@ -38,7 +45,6 @@ export const useApplicationStore = defineStore('applications', () => {
       }
     })
   }
-
   const updateApplication = async (values: ApplicationTypeForm, id?: number) => {
     await api.put(`/api/applications/${id}`, values).then((response) => {
       if (response.status === 200) {
@@ -47,7 +53,6 @@ export const useApplicationStore = defineStore('applications', () => {
       }
     })
   }
-
   const deleteApplication = async (id: number) => {
     await api.delete(`/api/applications/${id}`).then((response) => {
       if (response.status === 200) {
@@ -58,12 +63,14 @@ export const useApplicationStore = defineStore('applications', () => {
 
   return {
     applications,
+    activeApplications,
     applicationsUser,
     statuses,
     getApplications,
     storeApplication,
     deleteApplication,
     updateApplication,
-    getApplicationsStatuses
+    getApplicationsStatuses,
+    getActiveApplications
   }
 })

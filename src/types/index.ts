@@ -12,6 +12,7 @@ export interface UserType {
   applications?: ApplicationType[]
   active_applications?: ApplicationType[]
   interests?: InterestType[]
+  responses?: ResponseType[]
   id: number
   lat: number
   lng: number
@@ -111,11 +112,13 @@ export interface ApplicationType {
   time: string
   new_time: string
   application_status_id: number
+  user?: UserType
   user_id: number
   status: ApplicationStatuses
 }
 
 export interface ResponseType {
+  id?: number | null
   user_id: number | '',
   application_id: number,
   response_status_id: number,

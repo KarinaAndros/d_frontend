@@ -3,11 +3,11 @@ import type { ApplicationStatuses, ApplicationType, ResponseType } from '@/types
 import { useApplicationStore } from '@/stores/applications'
 import { useModalStore } from '@/stores/modal'
 import ApplicationsEdit from '../Modals/users/applicationsEdit.vue'
-import Responses from '../Modals/users/responses.vue';
+import Responses from '../Modals/users/responses.vue'
 
 // props
-const props = defineProps<{
-  applications: ApplicationType[]
+defineProps<{
+  applications?: ApplicationType[]
   statuses?: ApplicationStatuses[]
 }>()
 
@@ -15,49 +15,26 @@ const props = defineProps<{
 const modalStore = useModalStore()
 const applicationsStore = useApplicationStore()
 
-// values
-const activeTab = ref<number>(1)
-
-const filteredApplications = computed(() => {
-  if (!activeTab.value) {
-    return props.applications
-  }
-  return props.applications.filter(
-    application => application.status.id === activeTab.value,
-  )
-})
-
 // functions
 function editApplications(app: ApplicationType) {
-  modalStore.openModal(ApplicationsEdit, null, app)
+  modalStore.openModal(ApplicationsEdit, "Редактирование заявки", null, app)
 }
 function removeApplication(int: number) {
   applicationsStore.deleteApplication(int)
 }
-function allResponses(val: ResponseType[]){
+function allResponses(val: ResponseType[]) {
   modalStore.setResponses(val)
   modalStore.openModal(Responses)
 }
 </script>
 
 <template>
-  <!-- <div class="tabs flex_row">
-    <div
-      v-for="status in statuses"
-      :key="status.id"
-      class="tab"
-      :class="{ 'tab-active': status.id === activeTab }"
-      @click="activeTab = status.id"
-    >
-      {{ status.title }}
-    </div>
-  </div> -->
   <div
-    v-if="filteredApplications && filteredApplications.length > 0"
+    v-if="applications && applications.length > 0"
     class="profile_applications"
   >
     <div
-      v-for="app in filteredApplications"
+      v-for="app in applications"
       :key="app.id"
       class="profile_application"
     >
@@ -66,16 +43,6 @@ function allResponses(val: ResponseType[]){
         class="profile_application-responses"
         @click="allResponses(app.responses)"
       >{{ app.responses.length }}</span>
-
-      <div class="profile_application-title">
-        {{ app.title }}
-      </div>
-      <div
-        v-if="app.description"
-        class="profile_application-description"
-      >
-        {{ app.description }}
-      </div>
       <div class="flex_row">
         <div class="profile_application-date">
           {{ app.new_date }}
@@ -87,14 +54,37 @@ function allResponses(val: ResponseType[]){
           {{ app.status.title }}
         </div>
       </div>
-
-      <span
-        @click="removeApplication(app.id)"
-      >удалить</span>
-      <span @click="editApplications(app)">редактировать</span>
+      <div class="profile_application-title">
+        {{ app.title }}
+      </div>
+      <div
+        v-if="app.description"
+        class="profile_application-description"
+      >
+        {{ app.description }}
+      </div>
+      <div class="flex_row application_buttom">
+        <div class="applications_buttons">
+          <span
+            class="icon"
+            @click="removeApplication(app.id)"
+          > <img
+            class="edit_icon"
+            src="/icons/remove.svg"
+          ></span>
+          <span
+            class="icon"
+            @click="editApplications(app)"
+          >
+            <img
+              class="edit_icon"
+              src="/icons/edit.svg"
+            >
+          </span>
+        </div>
+      </div>
     </div>
   </div>
-
   <div v-else>
     Пока что пусто :(
   </div>
