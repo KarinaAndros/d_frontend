@@ -23,6 +23,7 @@ const { activeApplications: allApplications } = storeToRefs(applicationsStore)
 const mapStore = useMapStore()
 const { authUserData: me } = storeToRefs(authStore)
 const otherUsers = ref<MapUser[]>([])
+const fullBlock = ref<boolean>(false)
 
 authStore.getAuthUser()
 
@@ -60,7 +61,7 @@ function openModal(val: ApplicationType[]) {
 const carouselConfig = {
   height: 150,
   itemsToShow: 3,
-  wrapAround: true,
+  wrapAround: false,
 }
 
 watch(me, (newMe) => {
@@ -164,11 +165,22 @@ onUnmounted(() => {
   </div>
 
   <div
-    v-if="usersWithCommonInterests && usersWithCommonInterests.length > 0"
     class="friends_block container"
+    :class="{ full: fullBlock }"
   >
-    <div>Люди с схожими интересами</div>
-    <carousel v-bind="carouselConfig">
+    <div class="flex_row friends_block-top">
+      <div>Люди с схожими интересами</div>
+      <img
+        class="open_icon"
+        src="/icons/right.svg"
+        @click="fullBlock = !fullBlock"
+      >
+    </div>
+
+    <carousel
+      v-if="usersWithCommonInterests.length > 3"
+      v-bind="carouselConfig"
+    >
       <slide
         v-for="user in usersWithCommonInterests"
         :key="user.id"
@@ -187,5 +199,25 @@ onUnmounted(() => {
         <navigation />
       </template>
     </carousel>
+
+    <div
+      v-else
+      class="friends"
+    >
+      <div
+        v-for="user in usersWithCommonInterests"
+        :key="user.id"
+        class="friend"
+      >
+        <img
+          v-if="user?.avatar_url"
+          loading="lazy"
+          :src="user?.avatar_url"
+        >
+        <div class="profile_name">
+          {{ user.name }} {{ user?.surname }}
+        </div>
+      </div>
+    </div>
   </div>
 </template>

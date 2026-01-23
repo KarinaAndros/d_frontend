@@ -4,13 +4,38 @@
   display: block;
   background: #fcfcf7;
   position: absolute;
-  left: 50%;
+  transition: transform .3s linear;
   transform: translateX(-50%);
   border-top-left-radius: 40px;
   border-top-right-radius: 40px;
+  transform: translateY(158px);
   text-align: center;
   color: $colorBlack;
+  -webkit-box-shadow: 0px -10px 8px 0px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 0px -10px 8px 0px rgba(34, 60, 80, 0.2);
+  box-shadow: 0px -10px 8px 0px rgba(34, 60, 80, 0.2);
   z-index: 1;
+  &-top{
+    justify-content: space-between;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    .open_icon{
+      filter: invert(1);
+      width: 20px;
+      transform: rotate(270deg);
+    }
+  }
+  &.full{
+    transform: translateY(0);
+    .open_icon{
+
+
+      transform: rotate(90deg);
+    
+    }
+
+  }
 }
 .friends{
     display: flex;
@@ -18,27 +43,36 @@
   flex-direction: row;
   width: 100%;
   overflow: auto;
+  justify-content: space-around;
   padding-bottom: 10px;
   gap: 10px;
-  justify-content: center;
 }
 
-.friends_slide{
+.friends_slide, .friend{
   display: flex;
   flex-direction: column;
   gap: 10px;
   width: 20%;
   &.carousel__slide--active{
-      img{
-    width: 80px;
-    border-radius: 100%;
-    height: 80px;
-  }
+    img{
+      width: 80px;
+      border-radius: 100%;
+      height: 80px;
+    }
   }
   img{
     width: 60px;
     border-radius: 100%;
     height: 60px;
+  }
+  text-align: center;
+}
+.friend{
+  align-items: center;
+  img{
+    width: 80px;
+    border-radius: 100%;
+    height: 80px;
   }
   text-align: center;
 }

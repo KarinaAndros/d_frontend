@@ -17,7 +17,7 @@ const applicationsStore = useApplicationStore()
 
 // functions
 function editApplications(app: ApplicationType) {
-  modalStore.openModal(ApplicationsEdit, "Редактирование заявки", null, app)
+  modalStore.openModal(ApplicationsEdit, 'Редактирование заявки', null, app)
 }
 function removeApplication(int: number) {
   applicationsStore.deleteApplication(int)
@@ -43,6 +43,15 @@ function allResponses(val: ResponseType[]) {
         class="profile_application-responses"
         @click="allResponses(app.responses)"
       >{{ app.responses.length }}</span>
+      <div class="profile_application-title">
+        {{ app.title }}
+      </div>
+      <div
+        v-if="app.description"
+        class="profile_application-description"
+      >
+        {{ app.description }}
+      </div>
       <div class="flex_row">
         <div class="profile_application-date">
           {{ app.new_date }}
@@ -53,15 +62,6 @@ function allResponses(val: ResponseType[]) {
         <div class="profile_application-status">
           {{ app.status.title }}
         </div>
-      </div>
-      <div class="profile_application-title">
-        {{ app.title }}
-      </div>
-      <div
-        v-if="app.description"
-        class="profile_application-description"
-      >
-        {{ app.description }}
       </div>
       <div class="flex_row application_buttom">
         <div class="applications_buttons">
