@@ -19,11 +19,12 @@ const responses = computed(() => {
       :key="index"
       class="profile_application"
     >
-      <div class="profile_application-title">
+      <div v-if="response.user" 
+      class="profile_application-title">
         {{ response.user.name }}
       </div>
 
-      <div>
+      <div v-if="response.status">
         статус: {{ response.status.title }}
       </div>
     </div>

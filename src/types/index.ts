@@ -117,9 +117,16 @@ export interface ApplicationType {
   status: ApplicationStatuses
 }
 
+export interface ResponseStatusType {
+  id: number,
+  title: string
+}
+
 export interface ResponseType {
-  id?: number | null
+  id?: number | null,
+  user?: UserType,
   user_id: number | '',
   application_id: number,
+  status?: ResponseStatusType,
   response_status_id: number,
 }
