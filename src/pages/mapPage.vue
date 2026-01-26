@@ -132,19 +132,20 @@ onUnmounted(() => {
       <yandex-map-default-features-layer />
       <yandex-map-marker
         v-if="me"
+        class="marker-me"
         :settings="{
           coordinates: [Number(me.lng), Number(me.lat)],
-          zIndex: 10,
+          zIndex: 15,
         }"
       >
         <div class="custom-marker">
           <img
-            :src="me.avatar_url"
-            class="avatar"
+
+            src="/icons/map.svg"
           >
-          <span class="name">{{ me.name }}</span>
         </div>
       </yandex-map-marker>
+
       <yandex-map-marker
         v-for="user in otherUsers"
         :key="user.id"
@@ -178,7 +179,7 @@ onUnmounted(() => {
     </div>
 
     <carousel
-      v-if="usersWithCommonInterests.length > 3"
+      v-if="usersWithCommonInterests.length > 3 && fullBlock"
       v-bind="carouselConfig"
     >
       <slide
@@ -201,7 +202,7 @@ onUnmounted(() => {
     </carousel>
 
     <div
-      v-else
+      v-else-if="usersWithCommonInterests.length < 3 && fullBlock"
       class="friends"
     >
       <div

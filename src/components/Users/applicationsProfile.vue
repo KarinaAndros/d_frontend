@@ -6,10 +6,12 @@ import ApplicationsEdit from '../Modals/users/applicationsEdit.vue'
 import Responses from '../Modals/users/responses.vue'
 
 // props
-defineProps<{
+const props = defineProps<{
   applications?: ApplicationType[]
   statuses?: ApplicationStatuses[]
 }>()
+
+const localApplications = computed(() => props.applications || [])
 
 // stores
 const modalStore = useModalStore()
@@ -24,17 +26,17 @@ function removeApplication(int: number) {
 }
 function allResponses(val: ResponseType[]) {
   modalStore.setResponses(val)
-  modalStore.openModal(Responses)
+  modalStore.openModal(Responses, 'Отклики')
 }
 </script>
 
 <template>
   <div
-    v-if="applications && applications.length > 0"
+    v-if="localApplications && localApplications.length > 0"
     class="profile_applications"
   >
     <div
-      v-for="app in applications"
+      v-for="app in localApplications"
       :key="app.id"
       class="profile_application"
     >

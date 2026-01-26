@@ -7,5 +7,8 @@ $colorBlack: #111;
 $mainGradient: linear-gradient(90deg, rgb(0, 0, 0) 0%, rgba(33, 33, 33, 1) 100%);
 $mainGradientActive: linear-gradient(90deg, $mainColor 0%, rgba(33, 33, 33, 1) 90%);
 
+$agreeGradient: linear-gradient(90deg, rgb(61, 191, 100) 0%, rgb(39, 44, 41) 80%);
+$removeGradient: linear-gradient(90deg, rgb(169, 45, 45) 0%, rgb(39, 34, 34) 80%);
+
 //other
 $border-radius: 8px;

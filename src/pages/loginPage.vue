@@ -64,7 +64,7 @@ watch(() => store.messageError, (newError) => {
         class="input-wrapper"
       >
         <InputForm
-          :class="{ error: errors[input.name] && submitCount > 0 || store.messageError }"
+          :class="{ error: errors[input.name] && submitCount > 0 }"
           :name="input.name"
           :model-value="values[input.name]"
           :type="input.type"

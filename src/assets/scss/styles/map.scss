@@ -6,6 +6,10 @@
   width: 100%;
   height: calc(100% - 200px);
 }
+.marker-me{
+    width: 100%;
+    color: $colorWhite;
+}
 .custom-marker {
   display: flex;
   flex-direction: column;

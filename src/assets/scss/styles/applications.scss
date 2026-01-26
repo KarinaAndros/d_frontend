@@ -1,4 +1,4 @@
-.profile_applications {
+.profile_applications, .responses {
   display: flex;
   flex-direction: row;
   margin-bottom: 40px;
@@ -63,10 +63,9 @@
   border-radius: 12px;
   gap: 20px;
   &-title{
-    font-size: 21px;
+    font-size: 18px;
     font-weight: 600;
-    flex-wrap: wrap;
-    overflow-wrap: break-word;
+    overflow-wrap: anywhere;
   }
   &-description{
     font-size: 16px;
@@ -92,5 +91,5 @@
     }
 }
 .profile_application{
-  width: 50%;
+  height: max-content;
 }

@@ -1,0 +1,46 @@
+.responses{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 15px;
+}
+.response{
+    border: 1px solid transparent;
+  padding: 20px;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  background:
+    $mainGradient padding-box,
+    linear-gradient(90deg, #351056 0%, rgb(123, 123, 123) 100%) border-box;
+    &-name{
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+}
+.response__buttons{
+  flex-direction: row-reverse;
+  justify-content: left;
+  span img:not(.remove_response img){
+    width: 32px;
+  }
+}
+.remove_response{
+    background:
+    $removeGradient padding-box,
+    linear-gradient(90deg, #351056 0%, rgb(123, 123, 123) 100%) border-box !important;
+}
+
+.agree_response{
+    background:
+    $agreeGradient padding-box,
+    linear-gradient(90deg, #351056 0%, rgb(123, 123, 123) 100%) border-box !important;
+    span img{
+      width: 19px !important;
+    }
+}
