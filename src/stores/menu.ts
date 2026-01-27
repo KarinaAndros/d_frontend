@@ -18,6 +18,7 @@ export const useMenuStore = defineStore('menu', () => {
       return [
         { name: 'Профиль', link: '/profile' },
         { name: 'Карта', link: '/map' },
+        { name: 'Новости', link: '/news' },
         { name: 'Выйти', action: 'logout' },
       ]
     }
