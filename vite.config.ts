@@ -8,6 +8,15 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
 export default defineConfig({
+  server: {
+    proxy: {
+      '/api/rss': {
+        target: 'https://www.vremyan.ru',
+        changeOrigin: true,
+        rewrite: (path) => '/rss/yandex.xml'
+      }
+    }
+  },
   plugins: [
     vue(),
     Components({

@@ -35,7 +35,7 @@ onMounted(() => {
       class="modal_application"
     >
       <div class="modal_application-title">
-        {{ app.title }}
+          {{ app.title }}
         <img
           v-if="app.user"
           class="modal_application-avatar"

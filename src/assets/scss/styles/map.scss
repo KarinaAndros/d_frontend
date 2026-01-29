@@ -6,6 +6,7 @@
   width: 100%;
   height: calc(100% - 200px);
 }
+
 .custom-marker {
   display: flex;
   flex-direction: column;
@@ -34,4 +35,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+.marker-me{
+    width: 100%;
+    color: $colorWhite;
+    .custom-marker img{
+      filter: drop-shadow(0 3px 6px rgb(116, 101, 176)) invert(0);
+    }
 }

@@ -8,6 +8,7 @@ header {
   background: var(--header-background);
   align-items: center;
   padding: 30px;
+  height: 100px;
 }
 
 // burger
@@ -50,6 +51,8 @@ $burgerItems: first, last;
   margin: 0 auto;
   position: absolute;
   left: 50%;
+  display: block;
+  bottom: 22px;
   transform: translateX(-50%);
   gap: 15px;
   font-size: 16px;

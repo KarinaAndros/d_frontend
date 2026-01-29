@@ -123,10 +123,11 @@ export interface ResponseStatusType {
 }
 
 export interface ResponseType {
-  id?: number | null,
-  user?: UserType,
+  id?: number | null
   user_id: number | '',
+  user?: UserType,
   application_id: number,
   status?: ResponseStatusType,
   response_status_id: number,
+  status?: ResponseStatusType
 }

@@ -45,7 +45,7 @@
   grid-template-columns: repeat(2, 1fr);
   gap: var(--profile-gap);
 }
-.interests_buttons, .applications_buttons{
+.interests_buttons, .applications_buttons, .response__buttons{
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-between;

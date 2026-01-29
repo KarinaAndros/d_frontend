@@ -145,23 +145,29 @@ onUnmounted(() => {
      :settings="mapSettings">
       <yandex-map-default-scheme-layer />
       <yandex-map-default-features-layer />
-      <yandex-map-marker v-if="me" 
-      :settings="{
-        coordinates: [Number(me.lng), Number(me.lat)],
-        zIndex: 10,
-      }">
+      <yandex-map-marker
+        v-if="me"
+        :settings="{
+          coordinates: [Number(me.lng), Number(me.lat)],
+          zIndex: 10,
+        }"
+      >
         <div class="custom-marker">
-          <img :src="me.avatar_url" 
-          class="avatar">
+          <img
+            :src="me.avatar_url"
+            class="avatar"
+          >
           <span class="name">{{ me.name }}</span>
         </div>
       </yandex-map-marker>
-      <yandex-map-marker v-for="user in otherUsers" 
-      :key="user.id" 
-      :settings="{
-        coordinates: [Number(user.lng), Number(user.lat)],
-        zIndex: 10,
-      }">
+      <yandex-map-marker
+        v-for="user in otherUsers"
+        :key="user.id"
+        :settings="{
+          coordinates: [Number(user.lng), Number(user.lat)],
+          zIndex: 10,
+        }"
+      >
         <div class="custom-marker">
           <img :src="user.avatar_url" 
           class="avatar">
@@ -180,14 +186,20 @@ onUnmounted(() => {
        @click="fullBlock = !fullBlock">
     </div>
 
-    <carousel v-if="usersWithCommonInterests.length > 3"
-       v-bind="carouselConfig">
-      <slide v-for="user in usersWithCommonInterests"
-       :key="user.id"
-        class="friends_slide">
-        <img v-if="user?.avatar_url" 
-        loading="lazy" 
-        :src="user?.avatar_url">
+    <carousel
+      v-if="usersWithCommonInterests.length > 3"
+      v-bind="carouselConfig"
+    >
+      <slide
+        v-for="user in usersWithCommonInterests"
+        :key="user.id"
+        class="friends_slide"
+      >
+        <img
+          v-if="user?.avatar_url"
+          loading="lazy"
+          :src="user?.avatar_url"
+        >
         <div class="profile_name">
           {{ user.name }} {{ user?.surname }}
         </div>
@@ -197,14 +209,20 @@ onUnmounted(() => {
       </template>
     </carousel>
 
-    <div v-else
-     class="friends">
-      <div v-for="user in usersWithCommonInterests"
-       :key="user.id" 
-       class="friend">
-        <img v-if="user?.avatar_url"
-         loading="lazy" 
-         :src="user?.avatar_url">
+    <div
+      v-else
+      class="friends"
+    >
+      <div
+        v-for="user in usersWithCommonInterests"
+        :key="user.id"
+        class="friend"
+      >
+        <img
+          v-if="user?.avatar_url"
+          loading="lazy"
+          :src="user?.avatar_url"
+        >
         <div class="profile_name">
           {{ user.name }} {{ user?.surname }}
         </div>

@@ -1,6 +1,7 @@
 import HomeComponent from '@/components/homeComponent.vue'
 import LoginPage from '@/pages/loginPage.vue'
 import MapPage from '@/pages/mapPage.vue'
+import NewsPage from '@/pages/newsPage.vue'
 import ProfilePage from '@/pages/profilePage.vue'
 import RegistrationPage from '@/pages/registrationPage.vue'
 
@@ -10,4 +11,5 @@ export const routes = [
   { path: '/login', name: 'login', component: LoginPage },
   { path: '/profile', name: 'profile', component: ProfilePage, meta: { requiresAuth: true } },
   { path: '/map', name: 'map', component: MapPage, meta: { requiresAuth: true } },
+  { path: '/news', name: 'news', component: NewsPage, meta: { requiresAuth: true } },
 ]
