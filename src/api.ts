@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const api = axios.create({
   // baseURL: 'http://localhost:8000',
-  baseURL: 'https://annotation-dear-schemes-adaptive.trycloudflare.com',
+  baseURL: 'https://hero-featuring-aged-san.trycloudflare.com',
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',

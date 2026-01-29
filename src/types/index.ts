@@ -128,6 +128,5 @@ export interface ResponseType {
   user?: UserType,
   application_id: number,
   status?: ResponseStatusType,
-  response_status_id: number,
-  status?: ResponseStatusType
+  response_status_id: number
 }

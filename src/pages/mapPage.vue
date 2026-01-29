@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { MapUser } from '@/stores/map'
 import type { ApplicationType, UserType } from '@/types'
-import { Geolocation } from '@capacitor/geolocation'
 import { storeToRefs } from 'pinia'
 import { onMounted, onUnmounted, shallowRef } from 'vue'
 import { Carousel, Navigation, Slide } from 'vue3-carousel'
@@ -43,38 +42,16 @@ async function sendMyLocation(lat: number, lng: number) {
   }
 }
 
-async function startTracking() {
-  try {
-    // Проверка прав
-    const permStatus = await Geolocation.checkPermissions()
-    if (permStatus.location !== 'granted') {
-      const req = await Geolocation.requestPermissions()
-      if (req.location !== 'granted')
-        return
-    }
-
-    // Получаем текущую (быстро)
-    const current = await Geolocation.getCurrentPosition()
-    sendMyLocation(current.coords.latitude, current.coords.longitude)
-
-    // Центрируем карту на себя при старте
-    mapSettings.value = {
-      location: { center: [current.coords.longitude, current.coords.latitude], zoom: 17 },
-    }
-
-    // Запускаем слежение (Watch)
-    await Geolocation.watchPosition(
-      { enableHighAccuracy: true, timeout: 10000 },
-      (pos) => {
-        if (pos) {
-          sendMyLocation(pos.coords.latitude, pos.coords.longitude)
-        }
-      },
-    )
-  }
-  catch (e) {
-    console.error('Геолокация недоступна:', e)
-  }
+function startTracking() {
+  if (!navigator.geolocation)
+    return
+  navigator.geolocation.watchPosition(
+    (pos) => {
+      sendMyLocation(pos.coords.latitude, pos.coords.longitude)
+    },
+    err => console.error(err),
+    { enableHighAccuracy: true },
+  )
 }
 
 function openModal(val: ApplicationType[]) {
@@ -134,72 +111,43 @@ onUnmounted(() => {
 
 <template>
   <div class="map">
-    <div v-if="allApplications && allApplications.length > 0" 
-      class="active_apps_btn"
+    <div v-if="allApplications && allApplications.length > 0" class="active_apps_btn"
       @click="openModal(allApplications)">
-      <img class="edit_icon"
-       src="/icons/help.svg">
+      <img class="edit_icon" src="/icons/help.svg">
     </div>
-    <yandex-map v-model="map" 
-    class="map-container"
-     :settings="mapSettings">
+    <yandex-map v-model="map" class="map-container" :settings="mapSettings">
       <yandex-map-default-scheme-layer />
       <yandex-map-default-features-layer />
-      <yandex-map-marker
-        v-if="me"
-        :settings="{
-          coordinates: [Number(me.lng), Number(me.lat)],
-          zIndex: 10,
-        }"
-      >
+      <yandex-map-marker v-if="me" class="marker-me" :settings="{
+        coordinates: [Number(me.lng), Number(me.lat)],
+        zIndex: 15,
+      }">
         <div class="custom-marker">
-          <img
-            :src="me.avatar_url"
-            class="avatar"
-          >
-          <span class="name">{{ me.name }}</span>
+          <img src="/icons/map.svg">
         </div>
       </yandex-map-marker>
-      <yandex-map-marker
-        v-for="user in otherUsers"
-        :key="user.id"
-        :settings="{
-          coordinates: [Number(user.lng), Number(user.lat)],
-          zIndex: 10,
-        }"
-      >
+
+      <yandex-map-marker v-for="user in otherUsers" :key="user.id" :settings="{
+        coordinates: [Number(user.lng), Number(user.lat)],
+        zIndex: 10,
+      }">
         <div class="custom-marker">
-          <img :src="user.avatar_url" 
-          class="avatar">
+          <img :src="user.avatar_url" class="avatar">
           <span class="name">{{ user.name }}</span>
         </div>
       </yandex-map-marker>
     </yandex-map>
   </div>
 
-  <div class="friends_block container" 
-  :class="{ full: fullBlock }">
+  <div class="friends_block container" :class="{ full: fullBlock }">
     <div class="flex_row friends_block-top">
       <div>Люди с схожими интересами</div>
-      <img class="open_icon" 
-      src="/icons/right.svg"
-       @click="fullBlock = !fullBlock">
+      <img class="open_icon" src="/icons/right.svg" @click="fullBlock = !fullBlock">
     </div>
 
-    <carousel
-      v-if="usersWithCommonInterests.length > 3"
-      v-bind="carouselConfig"
-    >
-      <slide
-        v-for="user in usersWithCommonInterests"
-        :key="user.id"
-        class="friends_slide"
-      >
-        <img
-          v-if="user?.avatar_url"
-          loading="lazy"
-          :src="user?.avatar_url"
-        >
+    <carousel v-if="usersWithCommonInterests.length > 3 && fullBlock" v-bind="carouselConfig">
+      <slide v-for="user in usersWithCommonInterests" :key="user.id" class="friends_slide">
+        <img v-if="user?.avatar_url" loading="lazy" :src="user?.avatar_url">
         <div class="profile_name">
           {{ user.name }} {{ user?.surname }}
         </div>
@@ -209,20 +157,9 @@ onUnmounted(() => {
       </template>
     </carousel>
 
-    <div
-      v-else
-      class="friends"
-    >
-      <div
-        v-for="user in usersWithCommonInterests"
-        :key="user.id"
-        class="friend"
-      >
-        <img
-          v-if="user?.avatar_url"
-          loading="lazy"
-          :src="user?.avatar_url"
-        >
+    <div v-else-if="usersWithCommonInterests.length < 3 && fullBlock" class="friends">
+      <div v-for="user in usersWithCommonInterests" :key="user.id" class="friend">
+        <img v-if="user?.avatar_url" loading="lazy" :src="user?.avatar_url">
         <div class="profile_name">
           {{ user.name }} {{ user?.surname }}
         </div>
